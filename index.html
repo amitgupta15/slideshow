@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="slideshow">
-    <div class="slideshow-item current">
+  <div class="slideshow content">
+    <div class="slideshow-item">
       <h1>Item 1</h1>
       <p>This is Item 1</p>
     </div>
@@ -25,11 +25,6 @@
       <p>This is Item 4</p>
     </div>
   </div>
-  <script>
-    var item = document.querySelector('.slideshow-item');
-    setTimeout(function(){
-      item.classList.add('current');
-    }, 3000);
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
