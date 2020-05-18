@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Slideshow</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="slideshow">
-    <div class="slideshow-item">
+    <div class="slideshow-item current">
       <h1>Item 1</h1>
       <p>This is Item 1</p>
     </div>
@@ -25,5 +25,11 @@
       <p>This is Item 4</p>
     </div>
   </div>
+  <script>
+    var item = document.querySelector('.slideshow-item');
+    setTimeout(function(){
+      item.classList.add('current');
+    }, 3000);
+  </script>
 </body>
 </html>
