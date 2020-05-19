@@ -43,9 +43,10 @@ function assert(condition) {
 // End Test Framework
 
 it('should initialize $ss object', function () {
-  assert(Object.keys($ss).length === 2);
-  assert($ss.auto === false);
+  assert(Object.keys($ss).length === 3);
+  assert(typeof $ss.setAutoTransition === 'function');
   assert(typeof $ss.init === 'function');
+  assert($ss.interval === 3000);
 });
 
 it('should add "current" class to the classlist of the first slide', function () {
@@ -113,6 +114,28 @@ it('should transition to the previous slide when "prev" control is clicked', fun
   prevButton.dispatchEvent(clickEvent);
   prevButton.dispatchEvent(clickEvent);
   prevButton.dispatchEvent(clickEvent);
+  assert(allSlides[0].classList.contains('current'));
+  assert(allSlides[3].classList.contains('leaving'));
+});
+
+it('should transition slides automatically', function () {
+  $ss.interval = 4000;
+  $ss.init();
+  //Override setInterval
+  window.setInterval = (callback, interval) => {
+    callback();
+    assert(interval === 4000);
+  };
+
+  $ss.setAutoTransition(true);
+  //Setting the auto transition to true will transition to the second slide
+  assert(allSlides[0].classList.contains('leaving'));
+  assert(allSlides[1].classList.contains('current'));
+  initAndDestroy();
+
+  $ss.init();
+  $ss.setAutoTransition(false);
+  //Setting the auto transition to false will cause the first slide to stay in focus
   assert(allSlides[0].classList.contains('current'));
   assert(allSlides[3].classList.contains('leaving'));
 });
