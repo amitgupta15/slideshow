@@ -24,4 +24,19 @@
     if (currentItem === 0) items[items.length - 1].classList.add('leaving');
     currentItem++;
   }
+
+  document.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (event.target === document.querySelector('.left-control')) {
+      var item = document.querySelector('current');
+      var leavingItem = document.querySelector('leaving');
+
+      item.classList.remove('current');
+      item.classList.add('leaving');
+      items[--currentItem].classList.add('current');
+    }
+    if (event.target === document.querySelector('.right-control')) {
+      console.log('Right Arrow Clicked');
+    }
+  });
 })();
