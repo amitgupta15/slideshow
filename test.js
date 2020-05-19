@@ -109,10 +109,10 @@ it('should transition to the previous slide when "prev" control is clicked', fun
   assert(allSlides[3].classList.contains('current'));
   assert(allSlides[2].classList.contains('leaving'));
 
-  // // Dispatch click event from 'next-control'
-  // nextButton.dispatchEvent(clickEvent);
-  // nextButton.dispatchEvent(clickEvent);
-  // nextButton.dispatchEvent(clickEvent);
-  // assert(allSlides[0].classList.contains('current'));
-  // assert(allSlides[3].classList.contains('leaving'));
+  // Dispatch click event from 'prev-control'
+  prevButton.dispatchEvent(clickEvent);
+  prevButton.dispatchEvent(clickEvent);
+  prevButton.dispatchEvent(clickEvent);
+  assert(allSlides[0].classList.contains('current'));
+  assert(allSlides[3].classList.contains('leaving'));
 });
