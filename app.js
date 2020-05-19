@@ -1,15 +1,12 @@
 (function () {
-  var items = document.querySelectorAll('.slideshow-item');
-  var currentItem = 0;
+  var slideshowItems = document.querySelectorAll('.slideshow-item');
+  var currentIndex = 0;
   switchSlide();
+  createProgressBar();
 
   setInterval(function () {
-    if (currentItem <= items.length - 1) {
-      switchSlide();
-    } else {
-      currentItem = 0;
-      switchSlide();
-    }
+    currentIndex === slideshowItems.length - 1 ? (currentIndex = 0) : currentIndex++;
+    switchSlide();
   }, 5000);
 
   function switchSlide() {
@@ -19,24 +16,24 @@
     var item = document.querySelector('.current');
     if (item) item.classList.remove('current');
 
-    items[currentItem].classList.add('current');
-    if (currentItem !== 0) items[currentItem - 1].classList.add('leaving');
-    if (currentItem === 0) items[items.length - 1].classList.add('leaving');
-    currentItem++;
+    slideshowItems[currentIndex].classList.add('current');
+    if (currentIndex !== 0) slideshowItems[currentIndex - 1].classList.add('leaving');
+    if (currentIndex === 0) slideshowItems[slideshowItems.length - 1].classList.add('leaving');
   }
+
+  function createProgressBar() {}
 
   document.addEventListener('click', function (event) {
     event.preventDefault();
     if (event.target === document.querySelector('.left-control')) {
-      var item = document.querySelector('current');
-      var leavingItem = document.querySelector('leaving');
-
-      item.classList.remove('current');
-      item.classList.add('leaving');
-      items[--currentItem].classList.add('current');
+      currentIndex === 0 ? (currentIndex = slideshowItems.length - 1) : currentIndex--;
+      switchSlide();
     }
+
+    // Check if right arrow is clicked
     if (event.target === document.querySelector('.right-control')) {
-      console.log('Right Arrow Clicked');
+      currentIndex === slideshowItems.length - 1 ? (currentIndex = 0) : currentIndex++;
+      switchSlide();
     }
   });
 })();

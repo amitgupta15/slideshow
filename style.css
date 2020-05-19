@@ -42,6 +42,23 @@ body {
   top: 5rem;
   right: 1rem;
 }
+.progress-bar {
+  list-style: none;
+  position: absolute;
+  bottom:0;
+  width: 100%;
+  text-align: center;
+}
+.progress-bar-item {
+  display: inline-block;
+  border: 1px solid black;
+  width: 8px;
+  height: 8px;
+  /* border-radius: 50%; */
+}
+.progress-current {
+  background-color: black;
+}
 .slideshow {
   background-color: #eee;
   position: relative;
