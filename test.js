@@ -16,6 +16,12 @@ function initAndDestroy() {
   var selector = document.querySelector('.selector');
   selector.innerHTML = slideShowHTML;
   allSlides = document.querySelectorAll('.slideshow-item'); // Get all the slides
+
+  // progress bar items get appended to the progress bar. So you have to have this element in the DOM.
+  var progressBar = document.createElement('ul');
+  progressBar.className = 'progress-bar';
+  selector.appendChild(progressBar);
+
   // Create "click" event
   clickEvent = document.createEvent('HTMLEvents');
   clickEvent.initEvent('click', true, true);
@@ -27,7 +33,6 @@ function it(desc, fn) {
     initAndDestroy();
     fn();
     console.log('\x1b[32m%s\x1b[0m', '\u2714 ' + desc);
-    initAndDestroy();
   } catch (error) {
     console.log('\n');
     console.log('\x1b[31m%s\x1b[0m', '\u2718 ' + desc);
@@ -100,7 +105,6 @@ it('should transition to the previous slide when "prev" control is clicked', fun
   var prevButton = document.createElement('div');
   prevButton.className = 'prev-control'; // Prev control MUST have class "prev-control"
   selector.appendChild(prevButton);
-
   // Make sure the first slide is the current slide, and last slide is the prev side
   assert(allSlides[0].classList.contains('current'));
   assert(allSlides[3].classList.contains('leaving'));
@@ -138,4 +142,24 @@ it('should transition slides automatically', function () {
   //Setting the auto transition to false will cause the first slide to stay in focus
   assert(allSlides[0].classList.contains('current'));
   assert(allSlides[3].classList.contains('leaving'));
+});
+
+it('should display progress bar', function () {
+  $ss.init();
+
+  var allProgressBarItems = document.querySelectorAll('.progress-bar-item');
+  assert(allProgressBarItems.length === allSlides.length);
+  assert(allProgressBarItems[0].classList.contains('progress-current'));
+
+  var selector = document.querySelector('.selector');
+  // Create and add next control to the DOM
+  var nextButton = document.createElement('div');
+  nextButton.className = 'next-control'; // Next control MUST have class "next-control"
+  selector.appendChild(nextButton);
+
+  // Dispatch click event from 'next-control'
+  nextButton.dispatchEvent(clickEvent);
+  console.log(selector);
+  assert(!allProgressBarItems[0].classList.contains('progress-current'));
+  assert(allProgressBarItems[1].classList.contains('progress-current'));
 });

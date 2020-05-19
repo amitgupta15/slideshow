@@ -17,8 +17,11 @@
 
   function init() {
     slideshowItems = document.querySelectorAll('.slideshow-item');
+
     currentIndex = 0;
+    initProgressBar();
     displayCurrentSlide();
+    // displayProgress();
   }
 
   function displayCurrentSlide() {
@@ -39,12 +42,14 @@
     if (event.target === document.querySelector('.prev-control')) {
       currentIndex === 0 ? (currentIndex = slideshowItems.length - 1) : currentIndex--;
       displayCurrentSlide();
+      // displayProgress();
     }
 
     // Check if next arrow is clicked
     if (event.target === document.querySelector('.next-control')) {
       currentIndex === slideshowItems.length - 1 ? (currentIndex = 0) : currentIndex++;
       displayCurrentSlide();
+      // displayProgress();
     }
   });
 
@@ -53,7 +58,28 @@
       setInterval(function () {
         currentIndex === slideshowItems.length - 1 ? (currentIndex = 0) : currentIndex++;
         displayCurrentSlide();
+        // displayProgress();
       }, $ss.interval);
     }
+  }
+
+  function initProgressBar() {
+    var progressBar = document.querySelector('.progress-bar');
+    var progressBarItems = '';
+    for (var i = 0; i < slideshowItems.length; i++) {
+      progressBarItems += '<li class="progress-bar-item"></li>';
+    }
+    progressBar.innerHTML = progressBarItems;
+  }
+
+  function displayProgress() {
+    var currentProgress = document.querySelector('.progress-current');
+    console.log(currentProgress);
+    // if (currentProgress) {
+    currentProgress.classList.remove('.progress-current');
+    // }
+
+    var progressBarItems = document.querySelectorAll('.progress-bar-item');
+    progressBarItems[currentIndex].classList.add('progress-current');
   }
 })();
