@@ -32,12 +32,12 @@ body {
 .control:hover {
   opacity: 1;
 }
-.left-control {
+.prev-control {
   background: url(https://image.flaticon.com/icons/svg/130/130882.svg) no-repeat center;
   top: 5rem;
   left: 1rem;
 }
-.right-control {
+.next-control {
   background: url(https://image.flaticon.com/icons/svg/130/130884.svg) no-repeat center;
   top: 5rem;
   right: 1rem;
