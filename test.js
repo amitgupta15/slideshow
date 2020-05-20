@@ -122,28 +122,6 @@ it('should transition to the previous slide when "prev" control is clicked', fun
   assert(allSlides[3].classList.contains('leaving'));
 });
 
-it('should transition slides automatically', function () {
-  $ss.interval = 4000;
-  $ss.init();
-  //Override setInterval
-  window.setInterval = (callback, interval) => {
-    callback();
-    assert(interval === 4000);
-  };
-
-  $ss.setAutoTransition(true);
-  //Setting the auto transition to true will transition to the second slide
-  assert(allSlides[0].classList.contains('leaving'));
-  assert(allSlides[1].classList.contains('current'));
-  initAndDestroy();
-
-  $ss.init();
-  $ss.setAutoTransition(false);
-  //Setting the auto transition to false will cause the first slide to stay in focus
-  assert(allSlides[0].classList.contains('current'));
-  assert(allSlides[3].classList.contains('leaving'));
-});
-
 it('should display progress bar', function () {
   $ss.init();
 
@@ -159,7 +137,33 @@ it('should display progress bar', function () {
 
   // Dispatch click event from 'next-control'
   nextButton.dispatchEvent(clickEvent);
-  console.log(selector);
   assert(!allProgressBarItems[0].classList.contains('progress-current'));
   assert(allProgressBarItems[1].classList.contains('progress-current'));
+});
+
+it('should transition slides automatically', function () {
+  $ss.interval = 4000;
+  $ss.init();
+  //Override setInterval
+  window.setInterval = (callback, interval) => {
+    callback();
+    assert(interval === 4000);
+  };
+
+  $ss.setAutoTransition(true);
+  //Setting the auto transition to true will transition to the second slide
+  assert(allSlides[0].classList.contains('leaving'));
+  assert(allSlides[1].classList.contains('current'));
+
+  var allProgressBarItems = document.querySelectorAll('.progress-bar-item');
+  assert(allProgressBarItems[1].classList.contains('progress-current'));
+  initAndDestroy();
+
+  $ss.init();
+  $ss.setAutoTransition(false);
+  //Setting the auto transition to false will cause the first slide to stay in focus
+  assert(allSlides[0].classList.contains('current'));
+  assert(allSlides[3].classList.contains('leaving'));
+  allProgressBarItems = document.querySelectorAll('.progress-bar-item');
+  assert(allProgressBarItems[0].classList.contains('progress-current'));
 });

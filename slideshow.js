@@ -20,10 +20,13 @@
 
     currentIndex = 0;
     initProgressBar();
-    displayCurrentSlide();
-    // displayProgress();
+    display();
   }
 
+  function display() {
+    displayCurrentSlide();
+    displayProgress();
+  }
   function displayCurrentSlide() {
     var leavingItem = document.querySelector('.leaving');
     if (leavingItem) leavingItem.classList.remove('leaving');
@@ -41,15 +44,19 @@
     // Check if prev arrow is clicked
     if (event.target === document.querySelector('.prev-control')) {
       currentIndex === 0 ? (currentIndex = slideshowItems.length - 1) : currentIndex--;
-      displayCurrentSlide();
-      // displayProgress();
+      display();
     }
 
     // Check if next arrow is clicked
     if (event.target === document.querySelector('.next-control')) {
       currentIndex === slideshowItems.length - 1 ? (currentIndex = 0) : currentIndex++;
-      displayCurrentSlide();
-      // displayProgress();
+      display();
+    }
+
+    // Check if any item on the progess bar is clicked
+    if (event.target.dataset.progressId) {
+      currentIndex = parseInt(event.target.dataset.progressId);
+      display();
     }
   });
 
@@ -57,8 +64,7 @@
     if (isAutoEnabled) {
       setInterval(function () {
         currentIndex === slideshowItems.length - 1 ? (currentIndex = 0) : currentIndex++;
-        displayCurrentSlide();
-        // displayProgress();
+        display();
       }, $ss.interval);
     }
   }
@@ -67,17 +73,14 @@
     var progressBar = document.querySelector('.progress-bar');
     var progressBarItems = '';
     for (var i = 0; i < slideshowItems.length; i++) {
-      progressBarItems += '<li class="progress-bar-item"></li>';
+      progressBarItems += '<li data-progress-id="' + i + '" class="progress-bar-item"></li>';
     }
     progressBar.innerHTML = progressBarItems;
   }
 
   function displayProgress() {
-    var currentProgress = document.querySelector('.progress-current');
-    console.log(currentProgress);
-    // if (currentProgress) {
-    currentProgress.classList.remove('.progress-current');
-    // }
+    var progressCurrent = document.querySelector('.progress-current');
+    if (progressCurrent) progressCurrent.classList.remove('progress-current');
 
     var progressBarItems = document.querySelectorAll('.progress-bar-item');
     progressBarItems[currentIndex].classList.add('progress-current');
