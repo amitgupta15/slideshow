@@ -28,15 +28,21 @@
     displayProgress();
   }
   function displayCurrentSlide() {
+    // Remove the "leaving" class from any element.
     var leavingItem = document.querySelector('.leaving');
     if (leavingItem) leavingItem.classList.remove('leaving');
 
+    // Remove the "current" class from any element
     var item = document.querySelector('.current');
     if (item) item.classList.remove('current');
 
-    slideshowItems[currentIndex].classList.add('current');
-    if (currentIndex !== 0) slideshowItems[currentIndex - 1].classList.add('leaving');
-    if (currentIndex === 0) slideshowItems[slideshowItems.length - 1].classList.add('leaving');
+    if (slideshowItems.length === 1) {
+      slideshowItems[0].classList.add('current');
+    } else {
+      slideshowItems[currentIndex].classList.add('current');
+      if (currentIndex !== 0) slideshowItems[currentIndex - 1].classList.add('leaving');
+      if (currentIndex === 0) slideshowItems[slideshowItems.length - 1].classList.add('leaving');
+    }
   }
 
   document.addEventListener('click', function (event) {
